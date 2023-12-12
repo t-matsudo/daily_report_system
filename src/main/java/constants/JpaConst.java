@@ -20,8 +20,8 @@ public interface JpaConst {
     String EMP_COL_UPDATED_AT = "updated_at";
     String EMP_COL_DELETE_FLAG = "delete_flag";
 
-    int RORL_ADMIN = 1;//管理者権限あり
-    int RORL_GENERAL = 0;//管理者権限なし
+    int ROLE_ADMIN = 1;//管理者権限あり
+    int ROLE_GENERAL = 0;//管理者権限なし
     int EMP_DEL_TRUE = 1;//削除済み
     int EMP_DEL_FALSE = 0;//削除前
 
