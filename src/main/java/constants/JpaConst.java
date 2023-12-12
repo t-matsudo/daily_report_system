@@ -2,8 +2,8 @@ package constants;
 
 public interface JpaConst {
 
-    //persistance-unit名
-    String PRESISTANCE_UNIT_NAME = "daily_report_system";
+    //persistence-unit名
+    String PERSISTENCE_UNIT_NAME = "daily_report_system";
 
     //データ取得件数の最大値
     int ROW_PER_PAGE = 15;
