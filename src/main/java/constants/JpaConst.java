@@ -11,7 +11,7 @@ public interface JpaConst {
     //従業員テーブル
     String TABLE_EMP = "employees";//テーブル名
     //従業員テーブルカラム
-    String EMP_CLO_ID = "id";
+    String EMP_COL_ID = "id";
     String EMP_COL_CODE = "code";
     String EMP_COL_NAME = "name";
     String EMP_COL_PASS = "password";
