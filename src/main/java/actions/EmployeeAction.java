@@ -24,6 +24,11 @@ public class EmployeeAction extends ActionBase {
         service.close();
     }
 
+    /**
+     * 一覧画面の表示を行う
+     * @throws ServletException
+     * @throws IOException
+     */
     public void index() throws ServletException, IOException{
         //指定されたページ数の一覧画面に表示するデータを取得
         int page = getPage();
@@ -47,6 +52,20 @@ public class EmployeeAction extends ActionBase {
 
         forward(ForwardConst.FW_EMP_INDEX);
 
+    }
+
+    /**
+     * 新規登録画面の表示
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void entryNew() throws ServletException, IOException{
+        //CSRF対策用トークン
+        putRequestScope(AttributeConst.TOKEN, getTokenId());
+        //空の従業員データ
+        putRequestScope(AttributeConst.EMPLOYEE, new EmployeeView());
+
+        forward(ForwardConst.FW_EMP_NEW);
     }
 
 }
