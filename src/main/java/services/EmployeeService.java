@@ -126,7 +126,7 @@ public class EmployeeService extends ServiceBase {
         }
 
         boolean validatePass = false;
-        if(!savedEmp.getPassword().equals(ev.getPassword())) {
+        if(ev.getPassword() != null && !ev.getPassword().equals("")) {
             //パスワード更新時のみ、パスワードにバリデーションフラグを立てる
             validatePass = true;
             savedEmp.setPassword(
