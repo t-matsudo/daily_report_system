@@ -94,7 +94,7 @@ public abstract class ActionBase {
             throws ServletException, IOException{
 
         //URLの構築
-        String redirectUrl = request.getContextPath() + "/?action" + action.getValue();
+        String redirectUrl = request.getContextPath() + "/?action=" + action.getValue();
         if(command != null) {
             redirectUrl = redirectUrl + "&command=" + command.getValue();
         }
@@ -111,7 +111,7 @@ public abstract class ActionBase {
     protected boolean checkToken() throws ServletException, IOException{
         String _token = getRequestParam(AttributeConst.TOKEN);
 
-        if(_token != null || !(_token.equals(getTokenId()))) {
+        if (_token == null || !(_token.equals(getTokenId()))) {
             forward(ForwardConst.FW_ERR_UNKNOWN);
             return false;
         }else {

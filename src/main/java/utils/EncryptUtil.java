@@ -17,7 +17,7 @@ public class EncryptUtil {
     public static String getPasswordEncrypt(String plainPass, String pepper) {
         String ret = "";
 
-        if(plainPass != null && plainPass.equals("")) {
+        if(plainPass != null && !plainPass.equals("")) {
             byte[] bytes;
             String password = plainPass + pepper;
             try {
