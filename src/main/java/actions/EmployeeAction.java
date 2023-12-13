@@ -70,6 +70,11 @@ public class EmployeeAction extends ActionBase {
         forward(ForwardConst.FW_EMP_NEW);
     }
 
+    /**
+     * 新規登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
     public void create() throws ServletException, IOException{
 
         //CSRF対策
@@ -104,5 +109,20 @@ public class EmployeeAction extends ActionBase {
                 redirect(ForwardConst.ACT_EMP, ForwardConst.CMD_INDEX);
             }
         }
+    }
+
+    public void show() throws ServletException, IOException{
+        EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+
+        if(ev == null || ev.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+            //データが削除されていたり、論理削除されている場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return;
+        }
+
+        //取得した従業員情報をリクエストにセット
+        putRequestScope(AttributeConst.EMPLOYEE, ev);
+
+        forward(ForwardConst.FW_EMP_SHOW);
     }
 }
