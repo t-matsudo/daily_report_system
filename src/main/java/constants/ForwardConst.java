@@ -10,7 +10,7 @@ public enum ForwardConst {
     ACT_AUTH("Auth"),
 
     //command
-    CMD("commannd"),
+    CMD("command"),
     CMD_NONE(""),
     CMD_INDEX("index"),
     CMD_SHOW("show"),

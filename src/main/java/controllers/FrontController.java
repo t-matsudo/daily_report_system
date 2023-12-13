@@ -56,7 +56,7 @@ public class FrontController extends HttpServlet {
             String actionString = request.getParameter(ForwardConst.ACT.getValue());
 
             //該当するActionオブジェクトを作成
-            type = Class.forName(String.format("action.%sAction", actionString));
+            type = Class.forName(String.format("actions.%sAction", actionString));
             action =(ActionBase)(type.asSubclass(ActionBase.class).getDeclaredConstructor().newInstance());
 
         }catch(ClassNotFoundException | InstantiationException| IllegalAccessException | SecurityException
