@@ -193,7 +193,7 @@ public abstract class ActionBase {
      * @return
      */
     @SuppressWarnings("unchecked")
-    protected <R> R getSessnScope(AttributeConst key) {
+    protected <R> R getSessionScope(AttributeConst key) {
         return (R) request.getSession().getAttribute(key.getValue());
     }
 
