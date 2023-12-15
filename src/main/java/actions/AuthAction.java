@@ -67,4 +67,11 @@ public class AuthAction extends ActionBase {
         }
     }
 
+    public void logout() throws ServletException, IOException{
+        //ログインデータをセッションから削除し、ログイン画面にリダイレクト
+        removeSessionScope(AttributeConst.LOGIN_EMP);
+        putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGOUT.getMessage());
+        redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SHOW_LOGIN);
+    }
+
 }
