@@ -17,6 +17,11 @@
                     <td><c:out value = "${report.employee.name }"/></td>
                 </tr>
                 <tr>
+                    <th>日付</th>
+                    <fmt:parseDate value="${report.reportDate }" pattern = "yyyy-MM-dd" var="reportDay" type="date"/>
+                    <td><fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd'/></td>
+                </tr>
+                <tr>
                     <th>内容</th>
                     <td><pre><c:out value = "${report.content }"/></pre></td>
                 </tr>
