@@ -104,7 +104,7 @@ public class ReportService extends ServiceBase {
      * @param rv
      */
     private void createInternal(ReportView rv) {
-        em.getTransaction();
+        em.getTransaction().begin();
         em.persist(ReportConverter.toModel(rv));
         em.getTransaction().commit();
     }

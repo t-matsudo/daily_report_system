@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import actions.views.EmployeeView;
 import actions.views.ReportView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import services.ReportService;
 
 public class ReportAction extends ActionBase {
@@ -64,5 +66,52 @@ public class ReportAction extends ActionBase {
         rv.setReportDate(LocalDate.now());
         putRequestScope(AttributeConst.REPORT, rv);
         forward(ForwardConst.FW_REP_NEW);
+    }
+
+    /**
+     * 新規登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void create() throws ServletException, IOException{
+        if(checkToken()) {
+
+            //日付データの作成
+            LocalDate day = null;
+            if(getRequestParam(AttributeConst.REP_DATE) == null
+                    || getRequestParam(AttributeConst.REP_DATE).equals("")) {
+                day = LocalDate.now();
+            }else {
+                day = LocalDate.parse(getRequestParam(AttributeConst.REP_DATE));
+            }
+
+            //セッションからログイン中の従業員情報を取得
+            EmployeeView ev = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
+
+            //日報情報インスタンス作成
+            ReportView rv = new ReportView(
+                    null,
+                    ev,
+                    day,
+                    getRequestParam(AttributeConst.REP_TITLE),
+                    getRequestParam(AttributeConst.REP_CONTENT),
+                    null,
+                    null);
+
+            //情報の登録
+            List<String> errors = service.create(rv);
+            if(errors.size() > 0) {
+                putRequestScope(AttributeConst.TOKEN, getTokenId());
+                putRequestScope(AttributeConst.REPORT, rv);
+                putRequestScope(AttributeConst.ERR, errors);
+
+                forward(ForwardConst.FW_REP_NEW);
+            }else {
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+            }
+
+        }
     }
 }
