@@ -21,22 +21,26 @@
                 <tr>
                     <th>社員番号</th>
                     <th>氏名</th>
-                    <th>操作</th>
+                    <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
+                        <th>操作</th>
+                    </c:if>
                 </tr>
                 <c:forEach var="employee" items="${employees}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${employee.code}" /></td>
                         <td><c:out value="${employee.name}" /></td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${employee.deleteFlag == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()}">
-                                    （削除済み）
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="<c:url value='?action=${actEmp}&command=${commShow}&id=${employee.id}' />">詳細を見る</a>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
+                        <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
+                            <td>
+                                <c:choose>
+                                    <c:when test="${employee.deleteFlag == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()}">
+                                        （削除済み）
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="<c:url value='?action=${actEmp}&command=${commShow}&id=${employee.id}' />">詳細を見る</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </c:if>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -55,7 +59,9 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='?action=${actEmp}&command=${commNew}' />">新規従業員の登録</a></p>
+        <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
+            <p><a href="<c:url value='?action=${actEmp}&command=${commNew}' />">新規従業員の登録</a></p>
+        </c:if>
 
     </c:param>
 </c:import>

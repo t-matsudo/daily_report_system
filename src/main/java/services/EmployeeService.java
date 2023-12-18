@@ -150,7 +150,7 @@ public class EmployeeService extends ServiceBase {
      * IDをもとに該当するデータの論理削除を行う
      * @param id
      */
-    public void destory(Integer id) {
+    public void destroy(Integer id) {
         EmployeeView savedEmp = findOne(id);
 
         savedEmp.setUpdatedAt(LocalDateTime.now());
