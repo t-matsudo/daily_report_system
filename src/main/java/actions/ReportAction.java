@@ -1,6 +1,7 @@
 package actions;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,6 +25,11 @@ public class ReportAction extends ActionBase {
         service.close();
     }
 
+    /**
+     * 一覧画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
     public void index() throws ServletException, IOException{
         //指定されたページ数の一覧画面に表示する日報データの取得
         int page = getPage();
@@ -44,5 +50,19 @@ public class ReportAction extends ActionBase {
         }
 
         forward(ForwardConst.FW_REP_INDEX);
+    }
+
+    /**
+     * 新規登録画面の表示
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void entryNew() throws ServletException, IOException{
+        putRequestScope(AttributeConst.TOKEN, getTokenId());
+
+        ReportView rv = new ReportView();
+        rv.setReportDate(LocalDate.now());
+        putRequestScope(AttributeConst.REPORT, rv);
+        forward(ForwardConst.FW_REP_NEW);
     }
 }
