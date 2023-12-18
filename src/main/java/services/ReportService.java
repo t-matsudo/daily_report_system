@@ -110,7 +110,7 @@ public class ReportService extends ServiceBase {
     }
 
     /**
-     * 画面入力情報をもとに日報データを更新する
+     * 画面入力情報をもとに日報データを更新し、更新日を現在にする
      * @param rv
      * @return
      */
