@@ -132,4 +132,21 @@ public class ReportAction extends ActionBase {
             forward(ForwardConst.FW_REP_SHOW);
         }
     }
+
+    public void edit() throws ServletException, IOException{
+        ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+        EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+        if(rv == null || ev.getId() != rv.getEmployee().getId()) {
+            //日報が存在しない、もしくはログインしているIDと作成者のIDが異なる場合にエラー
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+        }else {
+            //必要な情報をリクエストに付与して編集画面を表示
+            putRequestScope(AttributeConst.TOKEN, getTokenId());
+            putRequestScope(AttributeConst.REPORT, rv);
+
+            forward(ForwardConst.FW_REP_EDIT);
+        }
+    }
 }
