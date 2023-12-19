@@ -31,6 +31,7 @@ public class TopAction extends ActionBase {
     public void index() throws ServletException, IOException{
         EmployeeView loginEmployee = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
 
+        //指定されたユーザーのレポート件数を取得する
         int page = getPage();
         List<ReportView> reports = service.getMinePerPage(loginEmployee, page);
 

@@ -15,7 +15,7 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>日報一覧</h2>
+        <h2><c:if test ="${name!=null}" ><c:out value = "${name}さんの"/></c:if>日報一覧</h2>
         <table id ="report_list">
             <tbody>
                 <tr>
@@ -41,6 +41,9 @@
                 <c:choose>
                     <c:when test ="${i == page}">
                         <c:out value= "${i}"/>&nbsp;
+                    </c:when>
+                    <c:when test="${id!=null}">
+                        <a href = "<c:url value='?action=${actRep}&command=${commIdx}&page=${i}&id=${id}'/>"><c:out value ="${i}"/></a>&nbsp;
                     </c:when>
                     <c:otherwise>
                         <a href = "<c:url value='?action=${actRep}&command=${commIdx}&page=${i}'/>"><c:out value ="${i}"/></a>&nbsp;

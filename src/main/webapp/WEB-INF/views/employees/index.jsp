@@ -4,6 +4,8 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
+<c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
@@ -28,7 +30,7 @@
                 <c:forEach var="employee" items="${employees}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${employee.code}" /></td>
-                        <td><c:out value="${employee.name}" /></td>
+                        <td><a href="<c:url value='?action=${actRep}&command=${commIdx}&id=${employee.id}' />"><c:out value="${employee.name}" /></a></td>
                         <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
                             <td>
                                 <c:choose>

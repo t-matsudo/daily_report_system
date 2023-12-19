@@ -12,15 +12,18 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import services.EmployeeService;
 import services.ReportService;
 
 public class ReportAction extends ActionBase {
 
     private ReportService service;
+    private EmployeeService empService;
 
     @Override
     public void process() throws ServletException, IOException {
         service = new ReportService();
+        empService = new EmployeeService();
 
         invoke();
 
@@ -33,11 +36,23 @@ public class ReportAction extends ActionBase {
      * @throws IOException
      */
     public void index() throws ServletException, IOException{
-        //指定されたページ数の一覧画面に表示する日報データの取得
-        int page = getPage();
-        List<ReportView> reports = service.getAllPerPage(page);
+        //リクエストに追加されたIDでユーザー検索を行う
+        EmployeeView searchEmployee = empService.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
-        long reportsCount = service.countAll();
+        int page = getPage();
+        List<ReportView> reports = null;
+        long reportsCount = 0;
+        if(searchEmployee != null) {
+            //検索ユーザーに該当がある場合、一覧画面に表示するための日報を検索して取得
+            reports = service.getMinePerPage(searchEmployee, page);
+            reportsCount = service.countAllMine(searchEmployee);
+            putRequestScope(AttributeConst.EMP_NAME, searchEmployee.getName());
+            putRequestScope(AttributeConst.EMP_ID, searchEmployee.getId());
+        }else {
+            //指定されたページ数の一覧画面に表示する日報データを全件から取得
+            reports = service.getAllPerPage(page);
+            reportsCount = service.countAll();
+        }
 
         putRequestScope(AttributeConst.REPORTS, reports);
         putRequestScope(AttributeConst.REP_COUNT, reportsCount);
