@@ -59,6 +59,19 @@ public class EmployeeConverter {
     }
 
     /*
+     * ViewモデルリストをDTOモデルリストに変換する
+     */
+    public static List<Employee> toModelList(List<EmployeeView> list){
+        List<Employee> es = new ArrayList<>();
+
+        for(EmployeeView e: list) {
+            es.add(toModel(e));
+        }
+        return es;
+    }
+
+
+    /*
      * Viewモデルの全フィールドの内容をDTOモデルのフィールドにコピーする
      */
     public static void copyViewToModel(Employee e, EmployeeView ev) {

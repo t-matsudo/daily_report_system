@@ -8,6 +8,8 @@ public enum ForwardConst {
     ACT_EMP("Employee"),
     ACT_REP("Report"),
     ACT_AUTH("Auth"),
+    ACT_FOLLOW("Follow"),
+
 
     //command
     CMD("command"),
@@ -22,6 +24,10 @@ public enum ForwardConst {
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
+    CMD_FOLLOW("follow"),
+    CMD_UNFOLLOW("unfollow"),
+    CMD_SHOWFOLLOW("showFollow"),
+    CMD_SHOWFOLLOWER("showFollower"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
@@ -34,7 +40,11 @@ public enum ForwardConst {
     FW_REP_INDEX("reports/index"),
     FW_REP_SHOW("reports/show"),
     FW_REP_NEW("reports/new"),
-    FW_REP_EDIT("reports/edit");
+    FW_REP_EDIT("reports/edit"),
+    FW_FOL_INDEX("follows/index"),
+    FW_FOL_SHOW("follows/show"),
+    FW_FOL_FOLLOW("follows/follow"),
+    FW_FOL_FOLLOWER("follows/follower");
 
     private final String text;
 

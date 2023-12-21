@@ -30,12 +30,43 @@ public class ReportService extends ServiceBase {
     }
 
     /**
+     * 指定した複数の従業員が作成した日報データを指定されたページ数の一覧画面に表示する
+     * @param employee
+     * @param page
+     * @return
+     */
+    public List<ReportView> getMinePerPage(List<EmployeeView> employee, int page){
+        List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL_MINE, Report.class)
+                .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModelList(employee))
+                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
+                .setMaxResults(JpaConst.ROW_PER_PAGE)
+                .getResultList();
+
+        return ReportConverter.toViewList(reports);
+    }
+
+
+
+    /**
+     * 指定されたユーザーのレポート数をカウントする
      * @param employee
      * @return
      */
     public long countAllMine(EmployeeView employee) {
         long count = (long)em.createNamedQuery(JpaConst.Q_REP_COUNT_ALL_MINE, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
+                .getSingleResult();
+        return count;
+    }
+
+    /**
+     * 指定された複数のユーザーのレポート数をカウントする
+     * @param employee
+     * @return
+     */
+    public long countAllMine(List<EmployeeView> employee) {
+        long count = (long)em.createNamedQuery(JpaConst.Q_REP_COUNT_ALL_MINE, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModelList(employee))
                 .getSingleResult();
         return count;
     }

@@ -1,18 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="constants.ForwardConst" %>
-<%@ page import="constants.AttributeConst" %>
+<%@ page import="constants.ForwardConst"%>
+<%@ page import="constants.AttributeConst"%>
 
 <c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
+<c:set var="actFol" value="${ForwardConst.ACT_FOLLOW.getValue()}" />
+
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdit" value="${ForwardConst.CMD_EDIT.getValue()}" />
+<c:set var="commFollow" value="${ForwardConst.CMD_FOLLOW.getValue()}" />
+<c:set var="commUnfollow" value="${ForwardConst.CMD_UNFOLLOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
 
+        <c:if test="${errors != null}">
+            <div id="flush_error">
+                <c:forEach var="error" items="${errors}">
+            ・<c:out value="${error}" />
+                    <br />
+                </c:forEach>
+            </div>
+        </c:if>
         <h2>id : ${employee.id} の従業員情報 詳細ページ</h2>
-
         <table>
             <tbody>
                 <tr>
@@ -26,25 +38,41 @@
                 <tr>
                     <th>権限</th>
                     <td><c:choose>
-                            <c:when test="${employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">管理者</c:when>
+                            <c:when
+                                test="${employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">管理者</c:when>
                             <c:otherwise>一般</c:otherwise>
                         </c:choose></td>
                 </tr>
                 <tr>
                     <th>登録日時</th>
-                    <fmt:parseDate value="${employee.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
-                    <td><fmt:formatDate value="${createDay}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                    <fmt:parseDate value="${employee.createdAt}"
+                        pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
+                    <td><fmt:formatDate value="${createDay}"
+                            pattern="yyyy-MM-dd HH:mm:ss" /></td>
                 </tr>
                 <tr>
                     <th>更新日時</th>
-                    <fmt:parseDate value="${employee.updatedAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="updateDay" type="date" />
-                    <td><fmt:formatDate value="${updateDay}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                    <fmt:parseDate value="${employee.updatedAt}"
+                        pattern="yyyy-MM-dd'T'HH:mm:ss" var="updateDay" type="date" />
+                    <td><fmt:formatDate value="${updateDay}"
+                            pattern="yyyy-MM-dd HH:mm:ss" /></td>
                 </tr>
             </tbody>
         </table>
 
+
+        <c:if test = "${sessionScope.login_employee.id != employee.id}">
+            <p>
+                <a href="<c:url value='?action=${actFol}&command=${commFollow}&id=${employee.id}' />">この従業員をフォローする</a>
+            </p>
+                        <p>
+                <a href="<c:url value='?action=${actFol}&command=${commUnfollow}&id=${employee.id}' />">この従業員のフォローを解除する</a>
+            </p>
+
+        </c:if>
         <p>
-            <a href="<c:url value='?action=${actEmp}&command=${commEdit}&id=${employee.id}' />">この従業員情報を編集する</a>
+            <a
+                href="<c:url value='?action=${actEmp}&command=${commEdit}&id=${employee.id}' />">この従業員情報を編集する</a>
         </p>
 
         <p>

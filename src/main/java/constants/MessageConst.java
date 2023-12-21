@@ -17,7 +17,13 @@ public enum MessageConst {
     E_NOEMP_CODE("社員番号を入力してください。"),
     E_EMP_CODE_EXIST("入力された社員番号の情報は既に存在しています。"),
     E_NOTITLE("タイトルを入力してください。"),
-    E_NOCONTENT("内容を入力してください。");
+    E_NOCONTENT("内容を入力してください。"),
+    E_NOCODE("社員番号が取得できませんでした。"),
+    E_DELETED("既に削除されたユーザーです。"),
+    E_FOLLOWED("既にフォロー済みのユーザーです。"),
+    E_UNFOLLOWED("フォローしていないユーザーです。"),
+    E_SELF_FOLLOW("自身のアカウントはフォローできません。");
+
 
     private final String text;
 

@@ -28,6 +28,7 @@ public class ReportAction extends ActionBase {
         invoke();
 
         service.close();
+        empService.close();
     }
 
     /**

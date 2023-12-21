@@ -84,6 +84,18 @@ public class EmployeeService extends ServiceBase {
         return employees_count;
     }
 
+    /**
+     * 社員IDリストから社員リストを取得
+     * @param codes
+     * @return
+     */
+    public List<EmployeeView> getByCode(List<String> codes){
+        List<Employee> list = em.createNamedQuery(JpaConst.Q_EMP_GET_REGISTERED_BY_CODE, Employee.class)
+                .setParameter(JpaConst.JPQL_PARM_CODE, codes)
+                .getResultList();
+        return EmployeeConverter.toViewList(list);
+    }
+
     /**画面から入力された内容をもとに、従業員テーブルにデータを1件作成
      * @param ev
      * @param pepper
