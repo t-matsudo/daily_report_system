@@ -170,6 +170,25 @@ public class FollowAction extends ActionBase {
      * @throws IOException
      */
     public void showFollow() throws ServletException, IOException{
+        EmployeeView follow = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+        int page = getPage();
+        List<FollowView> followList = service.getFollowPerPage(follow.getCode(), page);
+        List<EmployeeView> list = empService.getByCode(toStringList(followList));
+        long count = service.countAllFollow(follow.getCode());
+
+        //取得したデータをリクエストスコープに設定
+        putRequestScope(AttributeConst.EMPLOYEES, list);
+        putRequestScope(AttributeConst.EMP_COUNT, count);
+        putRequestScope(AttributeConst.PAGE, page);
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);
+
+      //フラッシュメッセージがセッションに設定されている場合、リクエストスコープに移し替える
+        String flush = getSessionScope(AttributeConst.FLUSH);
+        if (flush != null) {
+            putRequestScope(AttributeConst.FLUSH, flush);
+            removeSessionScope(AttributeConst.FLUSH);
+        }
+        forward(ForwardConst.FW_FOL_FOLLOW);
 
     }
 

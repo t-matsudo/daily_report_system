@@ -55,6 +55,17 @@ public class FollowService extends ServiceBase {
     }
 
     /**
+     * 入力された社員のフォロー数を取得
+     * @param code
+     * @return
+     */
+    public long countAllFollow(String code) {
+        return em.createNamedQuery(JpaConst.Q_FOL_COUNT_ALL_FOLLOW, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOW, code)
+                .getSingleResult();
+    }
+
+    /**
      * 全てのフォロワーリストを獲得する
      * @param code
      * @param page
