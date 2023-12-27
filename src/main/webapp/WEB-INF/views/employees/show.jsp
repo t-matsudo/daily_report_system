@@ -13,6 +13,7 @@
 <c:set var="commFollow" value="${ForwardConst.CMD_FOLLOW.getValue()}" />
 <c:set var="commUnfollow" value="${ForwardConst.CMD_UNFOLLOW.getValue()}" />
 
+
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
 
@@ -25,11 +26,12 @@
             </div>
         </c:if>
         <h2>id : ${employee.id} の従業員情報 詳細ページ</h2>
+        <div style = "display: none" id = "employeeId"><c:out value="${employee.id}" /></div>
         <table>
             <tbody>
                 <tr>
                     <th>社員番号</th>
-                    <td><c:out value="${employee.code}" /></td>
+                    <td id = "employeeCode"><c:out value="${employee.code}" /></td>
                 </tr>
                 <tr>
                     <th>氏名</th>
@@ -38,8 +40,7 @@
                 <tr>
                     <th>権限</th>
                     <td><c:choose>
-                            <c:when
-                                test="${employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">管理者</c:when>
+                            <c:when test="${employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">管理者</c:when>
                             <c:otherwise>一般</c:otherwise>
                         </c:choose></td>
                 </tr>
@@ -61,18 +62,22 @@
         </table>
 
 
-        <c:if test = "${sessionScope.login_employee.id != employee.id}">
+        <c:if test="${sessionScope.login_employee.id != employee.id}">
             <p>
                 <a href="<c:url value='?action=${actFol}&command=${commFollow}&id=${employee.id}' />">この従業員をフォローする</a>
             </p>
-                        <p>
+            <p>
                 <a href="<c:url value='?action=${actFol}&command=${commUnfollow}&id=${employee.id}' />">この従業員のフォローを解除する</a>
+            </p>
+            <p id = "followButton">
+                <div style = "display: none" id = "followState"><%= request.getAttribute(AttributeConst.EMP_FOLLOW_FLG.getValue())%></div>
+                <a class="follow" id = "follow">フォロー</a>
+                <a class="unfollow hidden" id = "unfollow">フォロー解除</a>
             </p>
 
         </c:if>
         <p>
-            <a
-                href="<c:url value='?action=${actEmp}&command=${commEdit}&id=${employee.id}' />">この従業員情報を編集する</a>
+            <a href="<c:url value='?action=${actEmp}&command=${commEdit}&id=${employee.id}' />">この従業員情報を編集する</a>
         </p>
 
         <p>
@@ -80,3 +85,10 @@
         </p>
     </c:param>
 </c:import>
+<script src="<c:url value='/js/follow.js' />" type="text/javascript" charset="UTF-8">
+</script>
+<script>
+    console.log("<%= pageContext.getAttribute("commFollow") %>");
+    show_var("<%= pageContext.getAttribute("commFollow") %>");
+</script>
+

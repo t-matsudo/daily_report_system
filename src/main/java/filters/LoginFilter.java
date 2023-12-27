@@ -36,7 +36,11 @@ public class LoginFilter implements Filter {
             // CSSフォルダ内は認証処理から除外する
             chain.doFilter(request, response);
 
-        } else {
+        } else if(servletPath.matches("/js.*")){
+            // JSフォルダ内は認証処理から除外する
+            chain.doFilter(request, response);
+
+        } else{
             HttpSession session = ((HttpServletRequest) request).getSession();
 
             //クエリパラメータからactionとcommandを取得

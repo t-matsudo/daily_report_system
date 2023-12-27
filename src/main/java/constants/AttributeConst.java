@@ -28,6 +28,7 @@ public enum AttributeConst {
     EMP_PASS("password"),
     EMP_NAME("name"),
     EMP_ADMIN_FLG("admin_flag"),
+    EMP_FOLLOW_FLG("follow_flag"),
 
     //管理者フラグ
     ROLE_ADMIN(1),
@@ -36,6 +37,11 @@ public enum AttributeConst {
     //削除フラグ
     DEL_FLAG_TRUE(1),
     DEL_FLAG_FALSE(0),
+
+    //フォローフラグ
+    FOL_FLAG_TRUE(1),
+    FOL_FLAG_FALSE(0),
+
 
     //日報管理
     REPORT("report"),

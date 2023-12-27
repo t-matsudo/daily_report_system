@@ -22,6 +22,7 @@
     <title><c:out value="日報管理システム" /></title>
     <link rel="stylesheet" href="<c:url value='/css/reset.css' />">
     <link rel="stylesheet" href="<c:url value='/css/style.css' />">
+    <link rel="stylesheet" href="<c:url value='/css/button.css' />">
 </head>
 <body>
     <div id="wrapper">

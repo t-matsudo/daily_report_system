@@ -12,19 +12,23 @@ import constants.JpaConst;
 import constants.MessageConst;
 import constants.PropertyConst;
 import services.EmployeeService;
+import services.FollowService;
 
 //従業員に関わる処理を行うActionクラス
 public class EmployeeAction extends ActionBase {
 
     private EmployeeService service;
+    private FollowService folService;
 
     @Override
     public void process() throws ServletException, IOException {
         service = new EmployeeService();
+        folService = new FollowService();
 
         invoke();
 
         service.close();
+        folService.close();
     }
 
     /**
@@ -120,6 +124,7 @@ public class EmployeeAction extends ActionBase {
     public void show() throws ServletException, IOException {
         if (checkAdmin()) {
             EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+            EmployeeView follow = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
             if (ev == null || ev.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
                 //データが削除されていたり、論理削除されている場合はエラー画面を表示
@@ -129,6 +134,13 @@ public class EmployeeAction extends ActionBase {
 
             //取得した従業員情報をリクエストにセット
             putRequestScope(AttributeConst.EMPLOYEE, ev);
+
+            //フォロー関係を取得し、リクエストにセット
+            if(folService.countFollowed(follow.getCode(), ev.getCode()) == 0) {
+                putRequestScope(AttributeConst.EMP_FOLLOW_FLG, AttributeConst.FOL_FLAG_FALSE.getIntegerValue());
+            }else {
+                putRequestScope(AttributeConst.EMP_FOLLOW_FLG, AttributeConst.FOL_FLAG_TRUE.getIntegerValue());
+            }
 
             forward(ForwardConst.FW_EMP_SHOW);
         }

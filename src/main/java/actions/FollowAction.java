@@ -91,14 +91,16 @@ public class FollowAction extends ActionBase {
             return;
         }
 
-        //既にフォローが行われていた場合追加処理を行わない
+        //フォローが行われていない場合のみ、フォロー処理を行う
         if(service.countFollowed(follow.getCode(), follower.getCode()) == 0) {
             //フォロー処理を行い、エラーが発生していたらログを記録
             errors.addAll(service.follow(follow.getCode(), follower.getCode()));
         }else {
             //フォロー済みの場合エラーメッセージを追加
             errors.add(MessageConst.E_FOLLOWED.getMessage());
+
         }
+        putRequestScope(AttributeConst.EMP_FOLLOW_FLG, AttributeConst.FOL_FLAG_TRUE.getIntegerValue());
 
         if(errors.size() > 0) {
             putRequestScope(AttributeConst.ERR, errors);
@@ -126,7 +128,7 @@ public class FollowAction extends ActionBase {
             return;
         }
 
-        //既にフォローが行われていた場合追加処理を行わない
+        //フォロー済みの場合のみ、解除処理を行う
         if(service.countFollowed(follow.getCode(), follower.getCode()) != 0) {
             //フォロー解除処理を行い、エラーが発生していたらログを記録
             errors.addAll(service.unfollow(follow.getCode(), follower.getCode()));
@@ -134,6 +136,7 @@ public class FollowAction extends ActionBase {
             //フォロー解除済みの場合エラーメッセージを追加
             errors.add(MessageConst.E_UNFOLLOWED.getMessage());
         }
+        putRequestScope(AttributeConst.EMP_FOLLOW_FLG, AttributeConst.FOL_FLAG_FALSE.getIntegerValue());
 
         if(errors.size() > 0) {
             putRequestScope(AttributeConst.ERR, errors);
