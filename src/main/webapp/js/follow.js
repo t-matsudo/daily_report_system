@@ -20,67 +20,52 @@ const show_var = (myConst) => {
   console.log("JSで受けっとった値: " + myConst);
 };
 
-fb.addEventListener('click', () =>{
-    console.log("クリック動作");
-    (async ()=> {
+fb.addEventListener('click', async (e) =>{
+    const connect = await new HttpConnection(`?action=Follow&command=follow&id=${id.innerText}`).toGetFetch();
+    if(connect.status === 200){
+        ufb.classList.remove("hidden");
+        fb.classList.add("hidden");
+    }
     //const test = await new Follow().test();
     //location.href = "?action=Employee&command=index";
-    const connect = await new HttpConnection(`?action=Follow&command=follow&id=${id.innerText}`).toGet();
-    ufb.classList.remove("hidden");
-    fb.classList.add("hidden");
-    })();
 });
 
-ufb.addEventListener('click', (e) =>{
-    console.log("クリック動作");
-    (async () => {
+ufb.addEventListener('click', async (e) =>{
+    const connect = await new HttpConnection(`?action=Follow&command=unfollow&id=${id.innerText}`).toGetFetch();
+    if(connect.status === 200){
+        fb.classList.remove("hidden");
+        ufb.classList.add("hidden");
     //const test = await new Follow().test();
     //location.href = "?action=Employee&command=index";
-    const connect = await new HttpConnection(`?action=Follow&command=unfollow&id=${id.innerText}`).toGet();
-    fb.classList.remove("hidden");
-    ufb.classList.add("hidden");
-    })();
+    }
 });
+
 
 class HttpConnection{
     constructor(url){
         this.url = url;
     }
 
-    async toGet(){
-        return await this.getConnect();
-    }
-
-    getConnect(){
+    async toGetConnect(){
         const httpTest = new XMLHttpRequest();
         httpTest.open('GET', this.url);
         httpTest.send();
+        httpTest.onload = () =>{
+            console.log("受け取った");
+        }
+        return httpTest;
+    }
 
-        httpTest.onreadystatechange = function(){
-            if(httpTest.readyState === 4 && httpTest.status === 200){
-                console.log("正常に接続されました。");
-            }else{
-                console.log(httpTest.status);
-                console.log(httpTest.readyState);
-                console.log("接続に問題がありました。");
-            }
-        };
+    async toGetFetch(){
+        try{
+            const response = await fetch(this.url);
+            return response;
+        }catch(e){
+            return "error";
+        }
     }
 }
 
-class Follow{
-    async test(){
-        return await this.asyncReturnSomething();
-    }
-
-    asyncReturnSomething(){
-        return new Promise((resolve) =>{
-            setTimeout(()=>{
-                resolve("これはtestです");
-            }, 1000);
-        });
-    }
-}
 
 /*const mysql = require('mysql');
  const connection = mysql.createConnection({
