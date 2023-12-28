@@ -10,6 +10,7 @@
 
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commShowFol" value="${ForwardConst.CMD_SHOWFOLLOW.getValue()}" />
+<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">

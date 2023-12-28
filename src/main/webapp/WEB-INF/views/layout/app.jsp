@@ -49,14 +49,15 @@
             </div>
             <c:if test="${sessionScope.login_employee != null}">
                 <div id="employee_name">
-                    <c:out value="${sessionScope.login_employee.name}" />
-                    &nbsp;さん&nbsp;&nbsp;&nbsp;
+                    <c:out value="${sessionScope.login_employee.name}" />&nbsp;さん&nbsp;&nbsp;&nbsp;
                     <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
+                </div>
+                <div>
                 </div>
             </c:if>
         </div>
         <div id="content">${param.content}</div>
-        <div id="footer">by Taro Kirameki.</div>
+        <footer>by T M.</footer>
     </div>
 </body>
 </html>

@@ -49,9 +49,8 @@ class HttpConnection{
     async toGetConnect(){
         const httpTest = new XMLHttpRequest();
         httpTest.open('GET', this.url);
-        httpTest.send();
+        await httpTest.send();
         httpTest.onload = () =>{
-            console.log("受け取った");
         }
         return httpTest;
     }

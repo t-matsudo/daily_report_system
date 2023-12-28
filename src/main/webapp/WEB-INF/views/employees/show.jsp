@@ -68,9 +68,10 @@
             </p>
             <p>
                 <a href="<c:url value='?action=${actFol}&command=${commUnfollow}&id=${employee.id}' />">この従業員のフォローを解除する</a>
+
             </p>
             <p id = "followButton">
-                <div style = "display: none" id = "followState"><%= request.getAttribute(AttributeConst.EMP_FOLLOW_FLG.getValue())%></div>
+                <div style = "display: none" id = "followState"><c:out value="${follow_flag}" /></div>
                 <a class="follow" id = "follow">フォロー</a>
                 <a class="unfollow hidden" id = "unfollow">フォロー解除</a>
             </p>
